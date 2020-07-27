@@ -27,20 +27,19 @@ with open('sample/tango.net') as f:
 
 import sexpdata
 
-parts_sexp = []
-for part in parts:
-    a = [[sexpdata.Symbol('comp'),
-         [sexpdata.Symbol('ref'), sexpdata.Symbol(part['ref'])],
-         [sexpdata.Symbol('value'), sexpdata.Symbol(part['value'])],
-         [sexpdata.Symbol('footprint'), sexpdata.Symbol(part['footprint'])]]]
-    parts_sexp.extend(a)
+parts_sexp = [[
+    sexpdata.Symbol('comp'),
+    [sexpdata.Symbol('ref'), sexpdata.Symbol(part['ref'])],
+    [sexpdata.Symbol('value'), sexpdata.Symbol(part['value'])],
+    [sexpdata.Symbol('footprint'), sexpdata.Symbol(part['footprint'])]]
+    for part in parts]
 
-lib_sexp = [sexpdata.Symbol('libraries'),
-            [sexpdata.Symbol('library'),
-             [sexpdata.Symbol('logical'),
-              sexpdata.Symbol('Device')],
-             [sexpdata.Symbol('uri'),
-              sexpdata.Symbol('/usr/share/kicad/library/Device.lib')]]]
+lib_sexp = [
+    sexpdata.Symbol('libraries'),
+    [sexpdata.Symbol('library'),
+     [sexpdata.Symbol('logical'), sexpdata.Symbol('Device')],
+     [sexpdata.Symbol('uri'),
+      sexpdata.Symbol('/usr/share/kicad/library/Device.lib')]]]
 
 signal_sexp = [sexpdata.Symbol('nets')]
 for i, sig in enumerate(nets, start=1):
@@ -55,7 +54,6 @@ for i, sig in enumerate(nets, start=1):
 
 sexp = [sexpdata.Symbol('export'),
         [sexpdata.Symbol('version'), sexpdata.Symbol('D')],
-        [sexpdata.Symbol('components'),
-         parts_sexp, lib_sexp, signal_sexp]]
+        [sexpdata.Symbol('components'), parts_sexp, lib_sexp, signal_sexp]]
 
 print(sexpdata.dumps(sexp).replace('\.', '.'))
