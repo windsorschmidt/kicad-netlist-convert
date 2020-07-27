@@ -60,7 +60,7 @@ state = {
     'parts': [],
     'signals': {}}
 
-with open('pads_netlist.asc') as f:
+with open('sample/pads-pcb.asc') as f:
     for line in f:
         line = line.strip()
         if not line:
