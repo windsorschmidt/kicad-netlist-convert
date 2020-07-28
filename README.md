@@ -6,15 +6,19 @@ Tested with KiCad/Pcbnew version 5.1.6
 
 ## Usage
 
+Convert from Tango netlist:
+
 ```
 python3 tango.py tango_netlist.net > kicad_netlist.net
 ```
+
+Convert from PADS-PCB netlist:
 
 ```
 python3 pads-pcb.py pads_netlist.asc > kicad_netlist.net
 ```
 
-Note: PADS netlist format does not support footprint values
+Note: PADS-PCB netlist format does not support footprint values
 
 ## Timestamps in KiCad Netlists
 
