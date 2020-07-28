@@ -7,11 +7,11 @@ Tested with KiCad/Pcbnew version 5.1.6
 ## Usage
 
 ```
-tango.py tango_netlist.net > kicad_netlist.net
+python3 tango.py tango_netlist.net > kicad_netlist.net
 ```
 
 ```
-pads-pcb.py pads_netlist.asc > kicad_netlist.net
+python3 pads-pcb.py pads_netlist.asc > kicad_netlist.net
 ```
 
 Note: PADS netlist format does not support footprint values
