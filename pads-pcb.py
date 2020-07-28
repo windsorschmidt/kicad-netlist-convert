@@ -1,21 +1,22 @@
 #!/bin/env python3
 
+import sys
 import sexpdata
 
 footprint_xref = {'1206': 'Capacitor_SMD:C_1206_3216Metric'}
 
+
 def do_header(state):
-    print('[header section]')
+    return
 
 
 def do_part(state):
-    print('[parts section]')
     global gather
     gather = gather_functions['part']
 
 
 def do_net(state):
-    print('[net section]')
+    return
 
 
 def do_signal(state):
@@ -28,7 +29,8 @@ def do_signal(state):
 
 
 def do_end(state):
-    print('[end section]')
+    return
+
 
 def gather_part(state):
     value = '0'
@@ -60,7 +62,13 @@ state = {
     'parts': [],
     'signals': {}}
 
-with open('sample/pads-pcb.asc') as f:
+if len(sys.argv) < 2:
+    print('usage: {} <netlist>'.format(sys.argv[0]))
+    sys.exit(0)
+else:
+    filename = sys.argv[1]
+
+with open(filename) as f:
     for line in f:
         line = line.strip()
         if not line:
@@ -75,9 +83,9 @@ with open('sample/pads-pcb.asc') as f:
 parts_sexp = []
 for part in state['parts']:
     a = [[sexpdata.Symbol('comp'),
-         [sexpdata.Symbol('ref'), sexpdata.Symbol(part['ref'])],
-         [sexpdata.Symbol('value'), sexpdata.Symbol(part['value'])],
-         [sexpdata.Symbol('footprint'), sexpdata.Symbol(part['footprint'])]]]
+          [sexpdata.Symbol('ref'), sexpdata.Symbol(part['ref'])],
+          [sexpdata.Symbol('value'), sexpdata.Symbol(part['value'])],
+          [sexpdata.Symbol('footprint'), sexpdata.Symbol(part['footprint'])]]]
     parts_sexp.extend(a)
 
 lib_sexp = [sexpdata.Symbol('libraries'),
